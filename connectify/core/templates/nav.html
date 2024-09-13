@@ -1,0 +1,70 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Connectify</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if request.user.is_authenticated %}
+                <!-- Link pentru profilul utilizatorului autentificat -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' username=request.user.username %}">Profile</a>
+                </li>
+                <!-- Link pentru deconectare -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login'%}" id="logoutLink">Logout</a>
+                </li>
+                {% else %}
+                <!-- Link pentru autentificare daca utilizatorul nu este autentificat -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <!-- Link pentru inregistrare -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Modal pentru confirmarea deconectarii -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel" style="color: black;">Logout Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="color: black;">
+                Are you sure you want to logout?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'login' %}" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripturi pentru Bootstrap si Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+        integrity="sha512-zCdP+9S0P+mAzV5B0StSMLbUB3wx7JU3P3RgOwA+w9VxPjVz4L4O4wPOny3lCCtG61mX5y/KFm7gVuX7Rg1aEw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"
+        integrity="sha384-GBFkR3SDsUDveZ1FzAvVlJ/TvzpTqrz5UJ9rQo76sZCk8KZS+6Ib8f8+feG42eVk"
+        crossorigin="anonymous"></script>
+
+<!-- Script pentru deschiderea modalului de logout -->
+<script>
+    document.getElementById('logoutLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        var myModal = new bootstrap.Modal(document.getElementById('logoutModal'), {});
+        myModal.show();
+    });
+</script>

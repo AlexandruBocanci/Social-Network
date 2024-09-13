@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Connectify - Login{% endblock %}
+
+{% block content %}
+<!-- Formular pentru autentificare -->
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  <h1>Login</h1>
+  
+  <!-- Afisare mesaje de eroare -->
+  {% if messages %}
+    <div class="alert alert-danger" style="text-align: center; color: red;">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Camp pentru username -->
+  <div class="input-box">
+    <input type="text" name="username" placeholder="Username" required>
+    <i class='bx bxs-user'></i>
+  </div>
+  
+  <!-- Camp pentru parola -->
+  <div class="input-box">
+    <input type="password" name="password" placeholder="Password" required>
+    <i class='bx bxs-lock-alt'></i>
+  </div>
+  
+  <!-- Optiuni de remember me si link pentru parola uitata -->
+  <div class="remember-forgot">
+    <label><input type="checkbox" name="remember_me">Remember Me</label>
+    <a href="#">Forgot Password</a>
+  </div>
+  
+  <!-- Buton de autentificare -->
+  <button type="submit" class="btn">Login</button>
+  
+  <!-- Link pentru inregistrare -->
+  <div class="register-link">
+    <p>Don't have an account? <a href="{% url 'signup' %}">Register</a></p>
+  </div>
+</form>
+{% endblock %}

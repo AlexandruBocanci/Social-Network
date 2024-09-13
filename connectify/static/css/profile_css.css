@@ -1,0 +1,90 @@
+/* Stilizare pentru body-ul paginii */
+body {
+  background-color: #222831;
+  color: #dddddd;
+}
+
+/* Stilizare pentru antetul profilului */
+.profile-header {
+  background-color: #76abae;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 80px;
+}
+
+/* Stilizare pentru avatarul profilului */
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #dddddd;
+}
+
+/* Stilizare pentru informațiile de profil */
+.profile-info {
+  background-color: #31363F;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-right: 40px;
+}
+
+/* Stilizare pentru titlurile și paragrafele din informațiile de profil */
+.profile-info h1,
+.profile-info p {
+  margin: 10px 0;
+}
+
+/* Stilizare pentru butoanele personalizate */
+.btn-custom {
+  background-color: #76abae;
+  border-color: #76abae;
+  color: #222831;
+}
+
+/* Stilizare pentru efectul de hover al butoanelor personalizate */
+.btn-custom:hover {
+  background-color: #5a9a9e;
+  border-color: #5a9a9e;
+}
+
+/* Stilizare pentru carduri */
+.card {
+  background-color: #222831;
+  color: #dddddd;
+}
+
+/* Stilizare pentru textul mic din carduri */
+.card-text small {
+  color: #aaaaaa;
+}
+
+/* Stilizare pentru brand-ul din navbar */
+.navbar-brand {
+  font-weight: bold;
+  color: #76abae;
+}
+
+/* Stilizare pentru link-urile din navbar */
+.nav-link {
+  color: #76abae;
+  margin-left: 10px;
+}
+
+/* Stilizare pentru footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #31363f;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.8rem;
+  border-top: 1px solid #31363f;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}

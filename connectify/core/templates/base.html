@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Connectify{% endblock %}</title>
+  <!-- Link catre fisierul CSS specific pentru paginile de login si signup -->
+  <link href="{% static 'css/login_signup_css.css' %}" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <!-- Alte fisiere CSS sau JS comune pot fi incluse aici -->
+</head>
+<body style="background-color: #31363f;">
+  <div class="wrapper">
+    {% block content %}
+    <!-- Aici va fi injectat continutul specific paginii -->
+    {% endblock %}
+  </div>
+  <!-- Footer-ul paginii -->
+  <footer>
+    <section>Created by Bocanci Alexandru</section>
+  </footer>
+</body>
+</html>

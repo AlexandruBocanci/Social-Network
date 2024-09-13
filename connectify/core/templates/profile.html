@@ -1,0 +1,191 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}
+    Profilul lui {{ user.username }}
+{% endblock %}
+
+{% block css %}
+    <!-- Stiluri CSS specifice pentru pagina de profil -->
+    <link href="{% static 'css/profile_css.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <!-- Continutul principal -->
+    <div class="container mt-5">
+        <div class="profile-header text-center py-5">
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="Avatar" class="profile-avatar mb-3">
+            {% else %}
+                <img src="{% static 'images/default-avatar.jpg' %}" alt="Avatar" class="profile-avatar mb-3">
+            {% endif %}
+            <h1>{{ user.username }}</h1>
+            <p>{{ profile.bio }}</p>
+            {% if request.user == user %}
+                <a class="btn btn-custom" href="{% url 'edit_profile' username=user.username %}">Edit Profile</a>
+            {% endif %}
+            {% if request.user.is_authenticated and request.user != user %}
+                {% if not is_following %}
+                    <form id="followForm" method="post" action="{% url 'follow_user' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" class="btn btn-custom" id="followButton">Follow</button>
+                    </form>
+                {% else %}
+                    <form id="unfollowForm" method="post" action="{% url 'unfollow_user' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" class="btn btn-custom" id="unfollowButton">Unfollow</button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 profile-info">
+                <h2>About</h2>
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Date of birth :</strong> {{ profile.date_of_birth }}</p>
+            </div>
+
+            <div class="col-md-8 profile-info">
+                <h2>Recent Posts</h2>
+                {% for post in user.post_set.all %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                {% if post.user.profile.avatar %}
+                                    <img src="{{ post.user.profile.avatar.url }}" alt="Avatar" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                                {% else %}
+                                    <img src="{% static 'images/default-avatar.jpg' %}" alt="Avatar" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                                {% endif %}
+                                <h5 class="card-title mb-0">{{ post.user.username }}</h5>
+                            </div>
+                            <p class="card-text">{{ post.content }}</p>
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" class="img-fluid mb-3" alt="Imagine Postare">
+                            {% endif %}
+                            {% if post.video %}
+                                <video controls class="img-fluid mb-3">
+                                    <source src="{{ post.video.url }}" type="video/mp4">
+                                    Browserul tau nu suporta tag-ul video.
+                                </video>
+                            {% endif %}
+
+                            <!-- Afisare Like-uri -->
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    {% if post.likes.count == 1 %}
+                                        1 persoana apreciaza aceasta postare
+                                    {% elif post.likes.count > 1 %}
+                                        {{ post.likes.count }} persoane apreciaza aceasta postare
+                                    {% else %}
+                                        Nimeni nu apreciaza inca
+                                    {% endif %}
+                                </small>
+                            </div>
+
+                            <!-- Buton Like -->
+                            <form method="post" action="{% url 'like_post' post.id %}">
+                                {% csrf_token %}
+                                <div class="mb-2">
+                                    {% if user != request.user %}
+                                        {% if request.user in post.likes.all %}
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-heart-fill"></i> Nu mai place
+                                            </button>
+                                        {% else %}
+                                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-heart"></i> Like
+                                            </button>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </form>
+
+                            <!-- Buton pentru a afisa utilizatorii care au dat Like -->
+                            <button class="btn btn-link btn-sm mt-2" onclick="toggleLikes('{{ post.id }}')">
+                                View likes
+                            </button>
+                            <ul id="likes-list-{{ post.id }}" class="list-unstyled mt-2" style="display: none;">
+                                {% for like in post.likes.all %}
+                                    <li>{{ like.user.username }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p class="card-text"><small class="text-muted">Postat pe {{ post.created_at }}</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Optional: JavaScript pentru componentele Bootstrap care necesita JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var followForm = document.getElementById('followForm');
+            var unfollowForm = document.getElementById('unfollowForm');
+
+            if (followForm) {
+                followForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    }).then(function (response) {
+                        if (response.ok) {
+                            document.getElementById('followButton').innerText = 'Nu mai urma';
+                            followForm.style.display = 'none';
+                            unfollowForm.style.display = 'block';
+                        } else {
+                            console.error('Eșec la urmarirea utilizatorului:', response.statusText);
+                        }
+                    }).catch(function (error) {
+                        console.error('Eroare la urmarirea utilizatorului:', error);
+                    });
+                });
+            }
+
+            if (unfollowForm) {
+                unfollowForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    }).then(function (response) {
+                        if (response.ok) {
+                            document.getElementById('unfollowButton').innerText = 'Urmarire';
+                            followForm.style.display = 'block';
+                            unfollowForm.style.display = 'none';
+                        } else {
+                            console.error('Eșec la anularea urmaririi utilizatorului:', response.statusText);
+                        }
+                    }).catch(function (error) {
+                        console.error('Eroare la anularea urmaririi utilizatorului:', error);
+                    });
+                });
+            }
+        });
+
+        function toggleLikes(postId) {
+            var likesList = document.getElementById('likes-list-' + postId);
+            if (likesList.style.display === 'none') {
+                likesList.style.display = 'block';
+            } else {
+                likesList.style.display = 'none';
+            }
+        }
+    </script>
+{% endblock %}

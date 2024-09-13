@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Connectify - Premium Social Network{% endblock %}</title>
+
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Bloc pentru CSS specific paginii -->
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Navigare inclusa -->
+    {% include 'nav.html' %}
+
+    <!-- Continut principal al paginii -->
+    <div class="container mt-5">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Scripturi pentru Bootstrap si Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Bloc pentru scripturi suplimentare specifice paginii -->
+    {% block extra_scripts %}{% endblock %}
+    
+    <!-- Footer -->
+    <footer>
+        <section>Created by Bocanci Alexandru</section>
+    </footer>
+</body>
+
+</html>

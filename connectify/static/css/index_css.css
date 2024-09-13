@@ -1,0 +1,141 @@
+/* Stilizare generala pentru body */
+body {
+  background-color: #222831;
+  color: #eeeeee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Stilizare pentru brand-ul din navbar */
+.navbar-brand {
+  font-weight: bold;
+  color: #76abae;
+}
+
+/* Stilizare pentru link-urile din navbar */
+.navbar-nav .nav-link {
+  color: #76abae;
+}
+
+/* Stilizare pentru iconitele din butoane */
+.btn-upload i {
+  margin-right: 5px;
+}
+
+/* Stilizare pentru postari */
+.post {
+  margin-bottom: 20px;
+  border: 1px solid #31363f;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #31363f;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Stilizare pentru imaginile din postari */
+.post img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Stilizare pentru videoclipurile din postari */
+.post video {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Stilizare pentru lista de prieteni */
+.friend-list {
+  margin-top: 20px;
+}
+
+/* Stilizare pentru link-urile din lista de prieteni */
+.friend-list .nav-link {
+  color: #76abae;
+  font-weight: bold;
+}
+
+/* Stilizare pentru item-urile din lista de prieteni */
+.friend-list .list-group-item {
+  background-color: #31363f;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Efect de hover pentru item-urile din lista de prieteni */
+.friend-list .list-group-item:hover {
+  background-color: #222831;
+}
+
+/* Stilizare pentru item-urile din cererile de prietenie */
+.friend-requests .list-group-item {
+  background-color: #31363f;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Efect de hover pentru item-urile din cererile de prietenie */
+.friend-requests .list-group-item:hover {
+  background-color: #222831;
+}
+
+/* Stilizare pentru butonul de succes din cererile de prietenie */
+.friend-requests .btn-success {
+  background-color: #76abae;
+  border-color: #76abae;
+}
+
+/* Stilizare pentru butonul de pericol din cererile de prietenie */
+.friend-requests .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Stilizare pentru continutul tab-urilor */
+.tab-content {
+  padding: 10px;
+  border: 1px solid #31363f;
+  border-radius: 10px;
+  background-color: #31363f;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Stilizare pentru tab-uri, ascunde cele inactive */
+.tab-pane {
+  display: none;
+}
+
+/* Stilizare pentru tab-ul activ */
+.tab-pane.active {
+  display: block;
+}
+
+/* Stilizare pentru link-uri fara subliniere */
+.no-underline {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Stilizare pentru link-uri cu subliniere la hover */
+.no-underline:hover {
+  text-decoration: underline;
+}
+
+/* Stilizare pentru footer */
+footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #31363f;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9rem;
+  border-top: 1px solid #31363f;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Connectify - Inregistrare{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'signup' %}">
+  {% csrf_token %}
+  <h1>Register</h1>
+  
+  <!-- Camp pentru username -->
+  <div class="input-box">
+    <input type="text" name="username" placeholder="Username" required>
+    <i class='bx bxs-user'></i>
+  </div>
+  
+  <!-- Camp pentru email -->
+  <div class="input-box">
+    <input type="email" name="email" placeholder="Email" required>
+    <i class='bx bx-mail-send'></i>
+  </div>
+  
+  <!-- Camp pentru parola -->
+  <div class="input-box">
+    <input type="password" name="password1" id="password" placeholder="Password" required>
+    <i class='bx bxs-lock-alt'></i>
+  </div>
+  
+  <!-- Camp pentru confirmarea parolei -->
+  <div class="input-box">
+    <input type="password" name="password2" id="confirm_password" placeholder="Confirm Password" required>
+    <i class='bx bxs-lock-alt'></i>
+  </div>
+  
+  <!-- Mesaj de eroare daca parolele nu se potrivesc -->
+  <div id="password_error" style="display: none; color: red;">Passwords do not match !.</div>
+  
+  <script>
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword(){
+      if(password.value != confirm_password.value) {
+        document.getElementById("password_error").style.display = "block";
+      } else {
+        document.getElementById("password_error").style.display = "none";
+      }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+  </script>
+  
+  <!-- Buton de trimitere formular -->
+  <button type="submit" class="btn">Register</button>
+  
+  <!-- Link pentru autentificare daca utilizatorul are deja un cont -->
+  <div class="register-link">
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+  </div>
+</form>
+{% endblock %}
